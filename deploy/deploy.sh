@@ -28,7 +28,9 @@ if [ ! -f ".env" ]; then
     echo TWITTER_TOKEN_SECRET=${TWITTER_TOKEN_SECRET} >> .env;
 fi
 cd ${RESULT_DIR};
-nvm use 7
+nvm install 7;
+nvm use 7;
+nvm alias default 7;
 npm install;
 npm run build;
 cd ..
