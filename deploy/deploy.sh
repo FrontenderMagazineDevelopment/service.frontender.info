@@ -16,6 +16,7 @@ cd /;
 cd ${WEB_PATH};
 tar -xzf ./${ARCH_NAME} -C ./;
 rm ./${ARCH_NAME};
+ls -dt ${WEB_PATH}*/ | tail -n +5 | xargs rm -rf;
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
     echo GITHUB_SECRET_TOKEN=${GITHUB_SECRET_TOKEN} >> .env;
