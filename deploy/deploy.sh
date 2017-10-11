@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-export RESULT_DIR=service.${TRAVIS_BUILD_NUMBER}
+export RESULT_DIR=service.frontender.info.${TRAVIS_BUILD_NUMBER}
 export SSHPASS=${SSH_PASS}
 export ARCH_NAME=service.package.tgz
-export SYMLINK_NAME=service
-export PROCESS_NAME=service
+export SYMLINK_NAME=service.frontender.info
+export PROCESS_NAME=service.frontender.info
 
 mkdir ${RESULT_DIR}
 shopt -s extglob
