@@ -11,57 +11,56 @@ Set of micro-services for Fronteder Magazine
 ## NGINX configuration
 
     upstream servicefrontenderinfo {
-            server 127.0.0.1:3003;
+        server 127.0.0.1:3053;
     }
 
     server {
-            listen *:80;
-            listen [::]:80;
+        listen *:80;
+        listen [::]:80;
 
-            server_name service.frontender.info;
-            proxy_set_header Host service.frontender.info;
-            location / {
-                    rewrite ^(.*)$ https://service.frontender.info$1 permanent;
-            }
+        server_name service.frontender.info;
+        proxy_set_header Host service.frontender.info;
+        location / {
+            rewrite ^(.*)$ https://service.frontender.info$1 permanent;
+        }
     }
 
     server {
-            listen 443 ssl;
-            listen [::]:443 ssl;
+        listen 443 ssl;
+        listen [::]:443 ssl;
 
-            ssl on;
-            ssl_certificate         /path/domain.crt;
-            ssl_certificate_key     /path/domain.key;
+        ssl on;
+        ssl_certificate /etc/letsencrypt/live/article.frontender.info/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/article.frontender.info/privkey.pem;
+        ssl_trusted_certificate /etc/letsencrypt/live/article.frontender.info/fullchain.pem;
+        include ssl.conf;
 
-            brotli              on;
-            brotli_comp_level   6;
-            brotli_types        text/plain text/css text/xml application/x-javascript;
+        brotli			on;
+        brotli_comp_level	7;
+        brotli_types		text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript;
 
-            error_log /path/service.frontender.info.error.log; #p
-            access_log /path/service.frontender.info.access.log; #p
+        gzip                    on;
+        gzip_comp_level         7;
+        gzip_disable            "msie6";
+        gzip_types              text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript;
 
-            server_name service.frontender.info;
+        error_log /websites/service.frontender.info/service.frontender.info.error.log; #p
+        access_log /websites/service.frontender.info/service.frontender.info.access.log; #p
 
-            add_header Strict-Transport-Security max-age=500;
+        server_name service.frontender.info;
 
-            location / {
-                    proxy_pass  http://servicefrontenderinfo;
-                    proxy_redirect off;
-                    proxy_set_header Host $host ;
-                    proxy_set_header X-Real-IP $remote_addr ;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for ;
-                    proxy_set_header X-Forwarded-Proto https;
-            }
+        proxy_set_header Host schedule.frontender.info;
+
+        location / {
+            proxy_pass  http://servicefrontenderinfo;
+            proxy_redirect off;
+            proxy_set_header Host $host ;
+            proxy_set_header X-Real-IP $remote_addr ;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for ;
+        }
     }
 
 # API
-
-You will get JSON as an answer
-
-    {
-        success: true | false # if operation was successfull
-        payload: mixed # any additional data
-    }
 
 ## GitHub
 
@@ -80,12 +79,6 @@ Checking if there are such trello user, if there is — payload will contain us
 ### /twitter/check/:login
 
 Checking if there are such twitter user, if there is — payload will contain user data
-
-## URL
-
-### /url/check/:url
-
-Check if url answering
 
 ## Autofill
 

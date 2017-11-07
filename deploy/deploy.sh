@@ -21,6 +21,8 @@ ls -dt ${WEB_PATH}*/ | tail -n +5 | xargs rm -rf;
 rm ./.env
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
+    echo JWT_SECRET=${JWT_SECRET} >> .env;
+    echo COOKIE_SECRET=${COOKIE_SECRET} >> .env;
     echo GITHUB_SECRET_TOKEN=${GITHUB_SECRET_TOKEN} >> .env;
     echo TRELLO_KEY=${TRELLO_KEY} >> .env;
     echo TRELLO_TOKEN=${TRELLO_TOKEN} >> .env;
